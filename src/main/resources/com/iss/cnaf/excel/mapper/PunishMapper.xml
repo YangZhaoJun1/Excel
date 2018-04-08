@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iss.cnaf.excel.punishment.dao.PunishMapper">
+  <resultMap id="BaseResultMap" type="com.iss.cnaf.excel.punishment.vo.Punishment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="car_id" jdbcType="VARCHAR" property="carId" />
+      <result column="punish_date" jdbcType="VARCHAR" property="punishDate" />
+      <result column="punish_place" jdbcType="VARCHAR" property="punishPlace" />
+      <result column="punish_cause" jdbcType="VARCHAR" property="punishCause" />
+      <result column="penalty_value" jdbcType="VARCHAR" property="penaltyValue" />
+      <result column="driver" jdbcType="VARCHAR" property="driver" />
+      <result column="results" jdbcType="VARCHAR" property="results" />
+  </resultMap>
+
+  <select id="queryPunish" resultMap="BaseResultMap">
+    SELECT * FROM t_punishment
+  </select>
+
+  <insert id="insertList">
+    insert into
+    t_punishment(car_id,punish_date,punish_place,punish_cause,penalty_value,driver,results)
+    values
+    <foreach collection="list" item="item" index="index"
+             separator=",">
+      (#{item.carId},#{item.punishDate},#{item.punishPlace},
+      #{item.punishCause},#{item.penaltyValue},#{item.driver},
+      #{item.results})
+    </foreach>
+  </insert>
+
+</mapper>
