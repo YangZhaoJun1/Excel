@@ -12,4 +12,6 @@ public interface RepairMapper {
     Page<Repair> queryRepair();
 
     int insertList(List<Repair> repairs);
+
+    int addRepair(Repair repair);
 }

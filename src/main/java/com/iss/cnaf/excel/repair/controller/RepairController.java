@@ -2,8 +2,10 @@ package com.iss.cnaf.excel.repair.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.iss.cnaf.excel.repair.service.RepairService;
+import com.iss.cnaf.excel.repair.vo.Repair;
 import com.iss.cnaf.manager.sys.model.CnafGrid;
 import com.iss.cnaf.manager.sys.model.QueryParam;
+import com.iss.cnaf.manager.sys.model.SystemicInfo;
 import com.iss.common.utils.FileUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +50,22 @@ public class RepairController {
     public void  excelImport(HttpServletRequest request, HttpServletResponse response) throws IOException{
         PrintWriter out=response.getWriter();
         Workbook wb = FileUtils.getWorkbookFromRequest(request,response);
-        Map<String, Object> map = repairService.batchExportJiJin(wb);
-        JSONObject json = new JSONObject(map);
-        String jsonString = json.toJSONString();
-        out.print(jsonString);
+        repairService.batchExportJiJin(wb);
         out.flush();
         out.close();
+    }
+
+
+    @RequestMapping("addRepair")
+    @ResponseBody
+    public SystemicInfo addRepair(SystemicInfo system ,Repair repair) throws IOException{
+        int result = repairService.addRepair(repair);
+        if(result!=0){
+            system.setSuccess(true, "添加成功");
+        }else{
+            system.setSuccess(true, "添加失败");
+        }
+        return system;
     }
 
 

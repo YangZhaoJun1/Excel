@@ -1,10 +1,10 @@
-package com.iss.cnaf.excel.repair.service.impl;
+package com.iss.cnaf.excel.maintain.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.iss.cnaf.excel.repair.dao.RepairMapper;
-import com.iss.cnaf.excel.repair.service.RepairService;
-import com.iss.cnaf.excel.repair.vo.Repair;
+import com.iss.cnaf.excel.maintain.dao.MaintainMapper;
+import com.iss.cnaf.excel.maintain.service.MaintainService;
+import com.iss.cnaf.excel.maintain.vo.Maintain;
 import com.iss.cnaf.manager.sys.model.CnafGrid;
 import com.iss.cnaf.manager.sys.model.QueryParam;
 import com.iss.common.utils.FileUtils;
@@ -20,32 +20,25 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2018/4/5.
+ * Created by Administrator on 2018/4/7.
  */
-
 @Service
-public class RepairServiceImpl implements RepairService{
-
+public class MaintainServiceImpl implements MaintainService{
 
     @Autowired
-    private RepairMapper repairMapper;
+    private MaintainMapper maintainMapper;
 
     @Override
-    public CnafGrid queryRepair(QueryParam param, CnafGrid grid) {
+    public CnafGrid queryMaintain(QueryParam param, CnafGrid grid) {
         PageHelper.startPage(param.getPage(), param.getRows());
-        Page<Repair> page = repairMapper.queryRepair();
+        Page<Maintain> page = maintainMapper.queryMaintain();
         grid.setGrid(page.getTotal(), page.getResult());
         return grid;
     }
 
     @Override
-    public int insertList(List<Repair> repairs) {
-        return repairMapper.insertList(repairs);
-    }
-
-    @Override
     public Map<String, Object> batchExportJiJin(Workbook wb) {
-        List<Repair> repairs = new ArrayList<>();
+        List<Maintain> maintains = new ArrayList<>();
         Sheet sheet = wb.getSheetAt(0);
         boolean fl = false;
         // 获取总行数
@@ -54,8 +47,8 @@ public class RepairServiceImpl implements RepairService{
             for (int start = 2; start < rows; start++) {
                 // 从第三行开始逐行获取
                 Row row = sheet.getRow(start);
-                Repair repair = new Repair();
-                for (int i = 0; i < 10; i++) {
+                Maintain maintain = new Maintain();
+                for (int i = 0; i < 7; i++) {
                     Cell cell = row.getCell(i);
                     String cellValue = FileUtils.getCellValue(cell);
 
@@ -64,51 +57,37 @@ public class RepairServiceImpl implements RepairService{
                             fl = true;
                             break;
                         }else{
-                            repair.setCarId(cellValue);
+                            maintain.setCarId(cellValue);
                         }
                     }
                     if (i == 1) {
-                        repair.setRepairDate(cellValue);
+                        maintain.setMaintainDate(cellValue);
                     }
                     if (i == 2) {
-                        repair.setReason(cellValue);
+                        maintain.setReason(cellValue);
                     }
                     if (i == 3) {
-                        repair.setMoney(cellValue);
+                        maintain.setMaterial(cellValue);
                     }
                     if (i == 4) {
-                        repair.setPosition(cellValue);
+                        maintain.setContents(cellValue);
                     }
                     if (i == 5) {
-                        repair.setManufactor(cellValue);
+                        maintain.setWorker(cellValue);
                     }
                     if (i == 6) {
-                        repair.setPhone(cellValue);
-                    }
-                    if (i == 7) {
-                        repair.setInvoice(cellValue);
-                    }
-                    if (i == 8) {
-                        repair.setBuyDate(cellValue);
-                    }
-                    if (i == 9) {
-                        repair.setDriver(cellValue);
+                        maintain.setRemark(cellValue);
                     }
                 }
-                if(repair.getCarId()!=""&&repair.getCarId()!=null){
-                    repairs.add(repair);
+                if(maintain.getCarId()!=""&&maintain.getCarId()!=null){
+                    maintains.add(maintain);
                 }
                 if(fl){
                     break;
                 }
             }
         }
-        repairMapper.insertList(repairs);
+        maintainMapper.insertList(maintains);
         return null;
-    }
-
-    @Override
-    public int addRepair(Repair repair) {
-        return repairMapper.addRepair(repair);
     }
 }

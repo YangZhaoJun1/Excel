@@ -25,11 +25,21 @@
     values
     <foreach collection="list" item="item" index="index"
              separator=",">
-      (#{item.carId,jdbcType=VARCHAR},#{item.repairDate,jdbcType=BIGINT},#{item.reason,jdbcType=INTEGER},
-      #{item.money,jdbcType=VARCHAR},#{item.position,jdbcType=BIGINT},#{item.manufactor,jdbcType=INTEGER},
-      #{item.phone,jdbcType=VARCHAR},#{item.invoice,jdbcType=BIGINT},#{item.buyDate,jdbcType=INTEGER},
-      #{item.driver,jdbcType=INTEGER})
+      (#{item.carId},#{item.repairDate},#{item.reason},
+      #{item.money},#{item.position},#{item.manufactor},
+      #{item.phone},#{item.invoice},#{item.buyDate},
+      #{item.driver})
     </foreach>
+  </insert>
+
+  <insert id="addRepair" parameterType="com.iss.cnaf.excel.repair.vo.Repair">
+    insert into
+    t_repair(car_id,repair_date,reason,money,position,manufactor,phone,invoice,buy_date,driver)
+    values
+      (#{carId},#{repairDate},#{reason},
+      #{money},#{position},#{manufactor},
+      #{phone},#{invoice},#{buyDate},
+      #{driver})
   </insert>
 
 </mapper>

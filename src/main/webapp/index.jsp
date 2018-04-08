@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" ></c:set>
 <jsp:include page="/initialEasyUI.jsp"></jsp:include>
-<title>cnaf</title>
+<title>信息管理系统</title>
 </head>
 <body>
 <script type="text/javascript">
@@ -197,7 +197,7 @@
 
 	<!-- center -->
 	<div
-		data-options="region:'center',title:'加油任务调度系统',href:'${ctx}/framework/center.jsp'"
+		data-options="region:'center',title:'信息管理系统',href:'${ctx}/framework/center.jsp'"
 		style="overflow: hidden;"></div>
 
 	<!-- bottom -->

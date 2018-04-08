@@ -20,7 +20,7 @@
             <input class="easyui-passwordbox" id="Password" iconWidth="28" style="width:100%;height:34px;padding:10px">
         </div>
         <div style="margin-bottom:20px">
-        	 <a href="#" class="easyui-linkbutton" onclick="login()" style="width:100%">登录加油调度系统</a>
+        	 <a href="#" class="easyui-linkbutton" onclick="login()" style="width:100%">登录</a>
         </div>
         <%--<div>
         	 <a href="#" class="easyui-linkbutton" onclick="loginVideo()" style="width:100%">登录视频监控系统</a>

@@ -14,7 +14,6 @@
 	    <table>
 	        <tr>
 	           <td><a id="btn" href="#" class="easyui-linkbutton" onclick="excelimport()" data-options="iconCls:'icon-search'">导入</a> </td>
-				<td><a id="addBtn" href="#" class="easyui-linkbutton" onclick="addRepair()" data-options="iconCls:'icon-search'">新增</a> </td>
 	        </tr>
 	    </table>
 	</div>
@@ -22,8 +21,8 @@
 <!-- 项目grid -->
 <div style="height: 480px;">
 	<table class="easyui-datagrid" id="dataGrid"
-		data-options="fit:false,idField:'id',loadMsg:'正在加载…',pagination:true,title:'车辆维修记录',
-			url:'${ctx}/repair/queryRepair.do',toolbar:'#mainProToolbar',
+		data-options="fit:false,idField:'id',loadMsg:'正在加载…',pagination:true,title:'车辆保养记录',
+			url:'${ctx}/maintain/queryMaintain.do',toolbar:'#mainProToolbar',
 			singleSelect:true, rownumbers : true,pagination : true,  maximized:true, striped:true,
 			pageSize : 20,pageList:[20,40,60,80,100],
 			checkOnSelect : false,selectOnCheck : false,singleSelect  : true, remoteSort : false
@@ -32,15 +31,12 @@
 			<tr> 
 				<th data-options="field:'id',hidden:true,align:'center'"></th>
 				<th data-options="field:'carId',align:'center'">车牌号</th>
-				<th data-options="field:'repairDate',align:'center'">维修日期</th>
-				<th data-options="field:'reason',align:'center'">故障原因</th>
-				<th data-options="field:'money',align:'center'">维修金额（元）</th>
-				<th data-options="field:'position',align:'center'">维修内容</th>
-				<th data-options="field:'manufactor',align:'center'" >维修厂家</th>
-				<th data-options="field:'phone',align:'center'">厂家电话</th>
-				<th data-options="field:'invoice',align:'center'">收据/正式发票</th>
-				<th data-options="field:'buyDate',align:'center'">车辆采购日期</th>
-				<th data-options="field:'driver',align:'center'">驾驶员</th>
+				<th data-options="field:'maintainDate',align:'center'">保养日期</th>
+				<th data-options="field:'reason',align:'center'">保养原因</th>
+				<th data-options="field:'material',align:'center'">使用材料</th>
+				<th data-options="field:'contents',align:'center'">维修内容</th>
+				<th data-options="field:'worker',align:'center'" >参加工作人员</th>
+				<th data-options="field:'remark',align:'center'">未参加人员及理由</th>
 		</thead>
 	</table>
 </div>
@@ -89,7 +85,7 @@ function fileUpload(){
     }
 
     $("#batchAddInfo").form('submit',{
-        url:'${ctx}/repair/excelImport.do',
+        url:'${ctx}/maintain/excelImport.do',
         onSubmit:function(){},
         success:function(data){
             closeDialog();
@@ -101,40 +97,6 @@ function fileUpload(){
 
 }
 
-function addRepair(){
-    mainDialog = parent.cy.dialog({
-        title : '添加车辆维修记录',
-        href : '${ctx}/cnaf/repair/addRepair.jsp',
-        width : 500,
-        height : 600,
-        overflow : scroll,
-        buttons : [ {
-            text : '添加',
-            handler : function() {
-                formDia = mainDialog.find('form');
-                if(!formDia.form("validate")){
-                    parent.simpleMessAlert.call(this,'提示',"请认真填写信息");
-                    return;
-                }
-				$.post('${ctx}/repair/addRepair.do',cy.serializeObject(formDia),function(json){
-					if (json.success) {
-						$("#dataGrid").datagrid("reload");
-						mainDialog.dialog('close');
-					}
-					parent.simpleMessAlert.call(this,'提示',json.message);
-					$('#dataGrid').datagrid('clearSelections');
-				},'json');
-            }
-        }, {
-            text : '清空',
-            handler : function() {
-                formDia.form('clear');
-            }
-        }],
-        onLoad : function(){
-            formDia = mainDialog.find('form');
-        }
-    });
-}
+
 
  </script>

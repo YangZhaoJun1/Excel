@@ -17,4 +17,6 @@ public interface RepairService {
     int insertList(List<Repair> repairs);
 
     Map<String,Object> batchExportJiJin(Workbook wb);
+
+    int addRepair(Repair repair);
 }

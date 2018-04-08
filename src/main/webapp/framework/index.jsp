@@ -6,5 +6,8 @@
 	
 </script>
 <div id="portal" style="position:relative;width: 100%" >
-	<div><img src="${ctx}/images/index2.png" style="width: 90%;margin-left: 5%;"></div>
+	<div>
+		<span style="font-size:55px;text-align: center;display:block;margin-top: 200px">信息管理系统</span>
+		<%--<img src="${ctx}/images/index2.png" style="width: 90%;margin-left: 5%;">--%>
+	</div>
 </div>
